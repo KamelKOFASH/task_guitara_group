@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/video_call/presentation/pages/video_call_page.dart';
+import 'features/video_call/presentation/views/video_call_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: VideoCallPage(),
+      home: VideoCallView(),
     );
   }
 }
