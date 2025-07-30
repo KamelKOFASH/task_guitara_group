@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stream_video_flutter/stream_video_flutter.dart';
-import 'package:task_guitara_group/core/constants.dart';
-import 'package:task_guitara_group/core/token_generator.dart';
 import 'package:task_guitara_group/views/widgets/loading_screen.dart';
+import 'package:task_guitara_group/core/services/stream_video_service.dart';
 
 class VideoCallView extends StatefulWidget {
   final String userId;
@@ -29,25 +28,32 @@ class _VideoCallViewState extends State<VideoCallView> {
   @override
   void initState() {
     super.initState();
+    _initializeStreamVideo();
+  }
 
-    // Initialize StreamVideo with your API key and user token
-    final user = User.regular(userId: widget.userId, name: widget.userName);
+  Future<void> _initializeStreamVideo() async {
+    try {
+      // Get StreamVideo instance using the service
+      streamVideo = await StreamVideoService.getInstance(
+        userId: widget.userId,
+        userName: widget.userName,
+      );
 
-    //! Generate development token (WARNING: Only for development!)
-    final token = TokenGenerator.generateDevelopmentToken(
-      apiSecret: apiSecret,
-      userId: widget.userId,
-    );
+      // Join the specified call
+      call = streamVideo.makeCall(
+        callType: StreamCallType.defaultType(),
+        id: widget.callId,
+      );
 
-    streamVideo = StreamVideo(apiKey, user: user, userToken: token);
-
-    // Join the specified call
-    call = streamVideo.makeCall(
-      callType: StreamCallType.defaultType(),
-      id: widget.callId,
-    );
-
-    _joinCall();
+      await _joinCall();
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          errorMessage = 'Failed to initialize video call: $e';
+        });
+      }
+    }
   }
 
   Future<void> _joinCall() async {
@@ -78,6 +84,7 @@ class _VideoCallViewState extends State<VideoCallView> {
   @override
   void dispose() {
     call.leave();
+    // Don't disconnect StreamVideo here as it might be used by other screens
     super.dispose();
   }
 

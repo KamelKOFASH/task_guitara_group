@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:task_guitara_group/views/video_call_view.dart';
 import 'package:task_guitara_group/core/app_theme.dart';
+import 'package:task_guitara_group/core/services/stream_video_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _joinCall() {
+  void _joinCall() async {
     if (_userNameController.text.trim().isEmpty) {
       _showSnackBar('Please enter your name', Colors.orange);
       return;
@@ -64,16 +65,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     final userId = 'user_${const Uuid().v4().substring(0, 6)}';
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VideoCallView(
-          userId: userId,
-          userName: _userNameController.text.trim(),
-          callId: _callIdController.text.trim(),
+    // Reset StreamVideo service before joining a new call to prevent conflicts
+    await StreamVideoService.reset();
+
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VideoCallView(
+            userId: userId,
+            userName: _userNameController.text.trim(),
+            callId: _callIdController.text.trim(),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   void _showSnackBar(String message, Color color) {
