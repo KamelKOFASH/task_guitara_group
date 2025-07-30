@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stream_video_flutter/stream_video_flutter.dart';
 import 'package:task_guitara_group/core/constants.dart';
+import 'package:task_guitara_group/core/token_generator.dart';
 
 class VideoCallView extends StatefulWidget {
   final String userId;
@@ -18,11 +19,16 @@ class _VideoCallViewState extends State<VideoCallView> {
   void initState() {
     super.initState();
 
-    // Initialize StreamVideo with your API key
-    streamVideo = StreamVideo(
-      apiKey,
-      user: User.regular(userId: widget.userId),
+    // Initialize StreamVideo with your API key and user token
+    final user = User.regular(userId: widget.userId);
+
+    // Generate development token (WARNING: Only for development!)
+    final token = TokenGenerator.generateDevelopmentToken(
+      apiSecret: apiSecret,
+      userId: widget.userId,
     );
+
+    streamVideo = StreamVideo(apiKey, user: user, userToken: token);
 
     // Join predefined room
     call = streamVideo.makeCall(
