@@ -10,7 +10,7 @@ class TokenGenerator {
     int? expiration,
   }) {
     final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    final exp = expiration ?? (now + 3600); // 1 hour from now
+    final exp = expiration ?? (now + 3600); //* 1 hour from now
     
     final header = {
       'alg': 'HS256',
