@@ -3,8 +3,8 @@
 A modern Flutter video calling application built with Stream.io's Video SDK, featuring real-time video communication with a beautiful, animated user interface.
 
 <div align="center">
-  <img src="readme_images/Screen1.png" alt="Home Screen" width="300"/>
-  <img src="readme_images/Screen2.png" alt="Video Call Screen" width="300"/>
+  <img src="readme_images/Screen1.png" alt="Home Screen" width="300" style="border:1px solid #ddd; border-radius: 5px; padding: 5px;"/>
+  <img src="readme_images/Screen2.png" alt="Video Call Screen" width="300" style="border:1px solid #ddd; border-radius: 5px; padding: 5px;"/>
 </div>
 
 ## ✨ Features
