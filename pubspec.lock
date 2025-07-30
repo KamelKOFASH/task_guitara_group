@@ -699,7 +699,7 @@ packages:
     source: hosted
     version: "2.1.4"
   stream_video:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: stream_video
       sha256: "09b5217fb389b92b798513c00bbf45287be59ba4bd8747e2ffc46462fe557ece"
