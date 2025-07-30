@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/video_call/presentation/views/video_call_view.dart';
+import 'package:task_guitara_group/views/video_call_view.dart';
 
 void main() {
   runApp(const MyApp());
