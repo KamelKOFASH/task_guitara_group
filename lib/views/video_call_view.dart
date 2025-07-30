@@ -39,7 +39,7 @@ class _VideoCallViewState extends State<VideoCallView> {
         userName: widget.userName,
       );
 
-      // Join the specified call
+      // Join the specified call for every call Id
       call = streamVideo.makeCall(
         callType: StreamCallType.defaultType(),
         id: widget.callId,
@@ -85,6 +85,7 @@ class _VideoCallViewState extends State<VideoCallView> {
   void dispose() {
     call.leave();
     // Don't disconnect StreamVideo here as it might be used by other screens
+    StreamVideoService.reset();
     super.dispose();
   }
 
