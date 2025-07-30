@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stream_video_flutter/stream_video_flutter.dart';
-import 'package:task_guitara_group/views/widgets/loading_screen.dart';
+import 'package:task_guitara_group/views/widgets/custom_error_view.dart';
+import 'package:task_guitara_group/views/widgets/custom_loading_view.dart';
 import 'package:task_guitara_group/core/services/stream_video_service.dart';
 
 class VideoCallView extends StatefulWidget {
@@ -41,7 +42,8 @@ class _VideoCallViewState extends State<VideoCallView> {
 
       // Join the specified call for every call Id
       call = streamVideo.makeCall(
-        callType: StreamCallType.defaultType(),
+        callType:
+            StreamCallType.defaultType(), // more types available like  StreamCallType.audio(), StreamCallType.video(), StreamCallType.screenShare()
         id: widget.callId,
       );
 
@@ -93,48 +95,25 @@ class _VideoCallViewState extends State<VideoCallView> {
   Widget build(BuildContext context) {
     // Show loading screen while connecting
     if (isLoading) {
-      return LoadingScreen(message: 'Connecting to ${widget.callId}...');
+      return CustomLoadingView(message: 'Connecting to ${widget.callId}...');
     }
 
     // Show error screen if connection failed
     if (errorMessage != null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Connection Error'),
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error_outline, size: 64, color: Colors.red),
-                const SizedBox(height: 16),
-                Text(
-                  errorMessage!,
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Go Back'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+      return CustomErrorView(errorMessage: errorMessage);
     }
-
+    // Show video call screen if connected
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.userName} - ${widget.callId}'),
-        backgroundColor: const Color(0xFF667eea),
-        foregroundColor: Colors.white,
+        title: Text(
+          '${widget.userName} - ${widget.callId}',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Color(0xfff6f7f9),
+        foregroundColor: Colors.black,
         elevation: 0,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: StreamCallContainer(
         call: call,

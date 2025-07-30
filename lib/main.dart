@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_guitara_group/views/home_screen.dart';
+import 'package:task_guitara_group/views/home_view.dart';
 import 'package:task_guitara_group/core/app_theme.dart';
 import 'package:task_guitara_group/core/services/stream_video_service.dart';
 
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       title: 'Stream Video Call Demo',
       theme: AppTheme.lightTheme,
-      home: const HomeScreen(),
+      home: const HomeView(),
       debugShowCheckedModeBanner: false,
     );
   }
