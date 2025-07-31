@@ -86,8 +86,6 @@ class _VideoCallViewState extends State<VideoCallView> {
   @override
   void dispose() {
     call.leave();
-    // Don't disconnect StreamVideo here as it might be used by other screens
-    StreamVideoService.reset();
     super.dispose();
   }
 

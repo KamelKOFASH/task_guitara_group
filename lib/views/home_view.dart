@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:task_guitara_group/views/video_call_view.dart';
 import 'package:task_guitara_group/core/app_theme.dart';
-import 'package:task_guitara_group/core/services/stream_video_service.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -68,7 +67,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     final userId = 'user_${const Uuid().v4().substring(0, 6)}';
 
     // Reset StreamVideo service before joining a new call to prevent conflicts
-    await StreamVideoService.reset();
+    // await StreamVideoService.reset();
 
     if (mounted) {
       //? mounted means that the widget is still in the tree and can be interacted with
